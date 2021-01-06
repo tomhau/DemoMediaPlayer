@@ -61,8 +61,7 @@ public class Controller {
             //The media is then used with Media Player
              Media media = new Media(path);
              mediaPlayer = new MediaPlayer(media);
-             //mediaView.setMediaPlayer(mediaPlayer);
-            // mediaPlayer.play();
+             
 
         }
 
