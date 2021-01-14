@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -11,131 +12,42 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="573.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="573.0" prefWidth="864.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <BorderPane layoutX="34.0" layoutY="58.0" prefHeight="573.0" prefWidth="786.0" style="-fx-background-color: grey;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mediaplayer" BorderPane.alignment="CENTER">
-               <font>
-                  <Font size="48.0" />
-               </font>
-            </Text>
-         </top>
          <left>
-            <GridPane style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
+            <GridPane prefHeight="421.0" prefWidth="157.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                  <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="300.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="154.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="349.5999755859375" minHeight="10.0" prefHeight="349.5999755859375" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="154.0" minHeight="10.0" prefHeight="104.80002441406248" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" onAction="#HandleAddPlaylist" prefHeight="50.0" prefWidth="100.0" text="Add Playlist" GridPane.rowIndex="1" />
-                  <ListView fx:id="ListViewPlayListNames" prefHeight="200.0" prefWidth="200.0" />
+                  <ListView fx:id="ListViewPlayListNames" prefHeight="322.0" prefWidth="158.0" />
+                  <VBox prefHeight="136.0" prefWidth="158.0" GridPane.rowIndex="1">
+                     <children>
+                        <Button fx:id="AddSongToPlaylistButton" mnemonicParsing="false" onAction="#HandleAddSongToPlaylist" prefHeight="28.0" prefWidth="158.0" text="Add Song to Playlist" />
+                        <Button fx:id="RemoveSongFromPlaylistButton" mnemonicParsing="false" onAction="#HandleRemoveSongFromPlaylist" prefHeight="29.0" prefWidth="173.0" text="Remove Song" />
+                        <Separator prefHeight="6.0" prefWidth="158.0" />
+                        <Button fx:id="NewPlaylistButton" mnemonicParsing="false" onAction="#HandleNewPlaylist" prefHeight="30.0" prefWidth="177.0" text="New Playlist" />
+                        <Button fx:id="DeletePlaylistButton" mnemonicParsing="false" onAction="#HandleDeletePlaylist" onDragDetected="#HandleDeletePlaylist" prefHeight="31.0" prefWidth="158.0" text="Delete Playlist" />
+                     </children>
+                  </VBox>
                </children>
             </GridPane>
          </left>
-         <bottom>
-            <GridPane prefHeight="30.0" prefWidth="775.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
-              <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.5" minWidth="10.0" prefWidth="79.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="95.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="10.0" prefWidth="76.5" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="10.0" prefWidth="103.5" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="251.0" minWidth="10.0" prefWidth="128.5" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="251.0" minWidth="10.0" prefWidth="227.5" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Button fx:id="Previous" mnemonicParsing="false" onAction="#HandlePrevious" prefHeight="30.0" prefWidth="30.0" GridPane.columnIndex="1">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/626031.png" />
-                           </image>
-                        </ImageView>
-                     </graphic></Button>
-                  <Button fx:id="Play" mnemonicParsing="false" onAction="#HandlePlay" prefHeight="50.0" prefWidth="50.0" GridPane.columnIndex="3">
-                     <graphic>
-                        <ImageView fitHeight="34.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/play.png" />
-                           </image>
-                        </ImageView>
-                     </graphic></Button>
-                  <Button fx:id="Next" mnemonicParsing="false" onAction="#HandleNext" prefHeight="37.0" prefWidth="32.0" GridPane.columnIndex="5">
-                     <graphic>
-                        <ImageView fitHeight="29.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/images.png" />
-                           </image>
-                        </ImageView>
-                     </graphic></Button>
-                  <Button fx:id="Replay" minWidth="31.0" mnemonicParsing="false" onAction="#HandleReplay" prefHeight="32.0" prefWidth="31.0" />
-                  <Button fx:id="Stop" mnemonicParsing="false" onAction="#HandleStop" GridPane.columnIndex="2">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/stop.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="Pause" mnemonicParsing="false" onAction="#HandlePause" GridPane.columnIndex="4">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/pause-button-png-16-16-512.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Slider prefHeight="14.0" prefWidth="0.0" GridPane.columnIndex="6">
-                     <padding>
-                        <Insets left="15.0" right="15.0" />
-                     </padding>
-                  </Slider>
-                  <ImageView fitHeight="34.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/rotate-arrow_318-1445.jpg" />
-                     </image>
-                  </ImageView>
-               </children>
-            </GridPane>
-         </bottom>
-         <right>
-            <GridPane style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <TextField fx:id="InputSearch" />
-                  <Button fx:id="Search" mnemonicParsing="false" onAction="#HandleSearch" text="Search" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM" />
-                  <Button fx:id="ChooseFile" mnemonicParsing="false" onAction="#HandleChooseFile" text="Choose file" GridPane.rowIndex="1" />
-               </children>
-            </GridPane>
-         </right>
          <center>
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <GridPane prefHeight="350.0" prefWidth="586.0">
+                  <GridPane prefHeight="349.0" prefWidth="611.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -145,11 +57,11 @@
                     </rowConstraints>
                      <children>
                         <ListView fx:id="ListViewAllSongs" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
-                        <ListView fx:id="ListViewPlayList" prefHeight="200.0" prefWidth="200.0" />
+                        <ListView fx:id="ListViewPlayList" prefHeight="330.0" prefWidth="293.0" />
                      </children>
                   </GridPane>
                   <Slider />
-                  <GridPane prefHeight="95.0" prefWidth="586.0" style="-fx-background-color: grey;">
+                  <GridPane prefHeight="58.0" prefWidth="706.0" style="-fx-background-color: grey;">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -176,9 +88,136 @@
                         </Text>
                      </children>
                   </GridPane>
+                  <GridPane prefHeight="54.0" prefWidth="864.0" style="-fx-background-color: grey;">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.5" minWidth="10.0" prefWidth="79.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="95.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="10.0" prefWidth="76.5" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="10.0" prefWidth="103.5" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="251.0" minWidth="10.0" prefWidth="128.5" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="251.0" minWidth="10.0" prefWidth="227.5" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button fx:id="Previous" mnemonicParsing="false" onAction="#HandlePrevious" prefHeight="30.0" prefWidth="30.0" GridPane.columnIndex="1">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/626031.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="Play" mnemonicParsing="false" onAction="#HandlePlay" prefHeight="50.0" prefWidth="50.0" GridPane.columnIndex="3">
+                           <graphic>
+                              <ImageView fitHeight="34.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/play.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="Next" mnemonicParsing="false" onAction="#HandleNext" prefHeight="37.0" prefWidth="32.0" GridPane.columnIndex="5">
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/images.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="Replay" minWidth="31.0" mnemonicParsing="false" onAction="#HandleReplay" prefHeight="32.0" prefWidth="31.0" />
+                        <Button fx:id="Stop" mnemonicParsing="false" onAction="#HandleStop" GridPane.columnIndex="2">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/stop.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="Pause" mnemonicParsing="false" onAction="#HandlePause" GridPane.columnIndex="4">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pause-button-png-16-16-512.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Slider prefHeight="14.0" prefWidth="0.0" GridPane.columnIndex="6">
+                           <padding>
+                              <Insets left="15.0" right="15.0" />
+                           </padding>
+                        </Slider>
+                        <ImageView fitHeight="34.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/rotate-arrow_318-1445.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </GridPane>
                </children>
             </VBox>
          </center>
+         <top>
+            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="158.0">
+                     <children>
+                        <TextField fx:id="PlaylistName" promptText="Enter name of new playlist" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Playlists" textAlignment="CENTER" wrappingWidth="97.30975341796875">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="100.0" prefWidth="583.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <HBox prefHeight="86.0" prefWidth="583.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Media Player" textAlignment="CENTER" wrappingWidth="577.8096923828125">
+                                       <font>
+                                          <Font size="50.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="30.0" prefWidth="583.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Songs in Selected Playlist" textAlignment="CENTER" wrappingWidth="327.6071319580078">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Text>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Library" textAlignment="CENTER" wrappingWidth="252.6652739524834">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="100.0" prefWidth="126.0">
+                     <children>
+                        <TextField fx:id="InputSearch" promptText="Search here" />
+                        <Button fx:id="Search" mnemonicParsing="false" onAction="#HandleSearch" prefHeight="42.0" prefWidth="126.0" text="Search" />
+                        <Button fx:id="ChooseFile" mnemonicParsing="false" onAction="#HandleChooseFile" prefHeight="34.0" prefWidth="126.0" text="Choose file" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </top>
       </BorderPane>
    </children>
 </AnchorPane>
