@@ -57,7 +57,7 @@
                     </rowConstraints>
                      <children>
                         <ListView fx:id="ListViewAllSongs" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
-                        <ListView fx:id="ListViewPlayList" prefHeight="330.0" prefWidth="293.0" />
+                        <ListView fx:id="ListViewPlayList" prefHeight="200.0" prefWidth="200.0" />
                      </children>
                   </GridPane>
                   <Slider />

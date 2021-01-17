@@ -3,7 +3,9 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -15,53 +17,43 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 
-//This item is for the ListView all the song
 
+public class Controller implements Initializable {
 
-public class Controller {
+    @FXML
+    private ListView<String> ListViewAllSongs;
+
+    @FXML
+    private  ListView<String> ListViewPlayListNames;
+
+    @FXML
+    private ListView<String> ListViewPlayList;
+
 
 
     private String path;
     private MediaPlayer mediaPlayer;
 
 
+    public void HandleDeletePlaylist(ActionEvent actionEvent) {
+    }
 
-    public void ListViewAllSongs(Stage stage) throws Exception {
-
-        //Select Data from the Database
-        DB.selectSQL("Select * from tbl_Songs");
-
-        //Get the data
-
-        do {
-            String SongNameData = DB.getDisplayData();
-            if (SongNameData.equals(DB.NOMOREDATA)) {
-                break;
-            } else {
-                System.out.print(SongNameData);
-            }
-        } while (true);
+    public void HandleNewPlaylist(ActionEvent actionEvent) {
+    }
 
 
-        //Create the ListView Control:
-
-        //1. Create the List for the Listview
-        ObservableList<String> NamesList = FXCollections.observableArrayList("Test Test Test");
-
-        //2. Create the ListView
-        ListView TestList= new ListView();
+    public void HandleRemoveSongFromPlaylist(ActionEvent actionEvent) {
+    }
 
 
-        //3. Creating a scene
+    public void HandleAddSongToPlaylist(ActionEvent actionEvent) {
+    }
 
-
-}
-
-public void ListViewPlayList(Stage primaryStage) throws Exception {
-
-}
 
     public void HandlePlay(ActionEvent event) {
         mediaPlayer.play();
@@ -119,6 +111,103 @@ public void ListViewPlayList(Stage primaryStage) throws Exception {
 
 
     }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        String SongNameData;
+        String PlayListsData;
+        String PlaylistContents;
+
+        //Select Tbl_PlaylistContents from the Database
+        DB.selectSQL("Select fld_SongName from tbl_PlaylistContents");
+
+        //Get the data
+
+        do {
+            PlaylistContents = DB.getDisplayData();
+            if (PlaylistContents.equals(DB.NOMOREDATA)) {
+                break;
+            } else {
+                //Created the List for the ListView
+                ObservableList<String> list = FXCollections.<String>observableArrayList(PlaylistContents);
+
+                //Created the ListView
+                ListView<String> data3 = new ListView<>(list);
+
+
+                //Display the ListView
+                ListViewPlayList.setItems(list);
+
+                System.out.print(PlaylistContents);
+            }
+        } while (true);
+
+
+
+
+
+        //Select Tbl_Songs from the Database
+        DB.selectSQL("Select fld_SongName, fld_Album, fld_Artist, fld_Year, fld_Length from tbl_Songs");
+
+        //Get the data
+
+        do {
+            SongNameData = DB.getDisplayData();
+            if (SongNameData.equals(DB.NOMOREDATA)) {
+                break;
+            } else {
+                //Created the List for the ListView
+                ObservableList<String> list = FXCollections.<String>observableArrayList(SongNameData);
+
+                //Created the ListView
+                ListView<String> data = new ListView<>(list);
+
+
+                //Display the ListView
+                ListViewAllSongs.setItems(list);
+
+
+                System.out.print(SongNameData);
+            }
+        } while (true);
+
+
+
+
+        //Select Tbl_Playlists from the Database
+        DB.selectSQL("Select fld_Name from tbl_Playlists");
+
+        //Get the data
+
+        do {
+            PlayListsData = DB.getDisplayData();
+            if (PlayListsData.equals(DB.NOMOREDATA)) {
+                break;
+            } else {
+
+                //Created the List for the ListView
+                ObservableList<String> list = FXCollections.<String>observableArrayList(PlayListsData);
+
+                //Created the ListView
+                ListView<String> data3 = new ListView<>(list);
+
+
+                //Display the ListView
+                ListViewPlayListNames.setItems(list);
+
+
+                System.out.print(PlayListsData);
+            }
+        } while (true);
+
+
+
+
+
+
+
+    }
+
 
 }
 
