@@ -1,38 +1,31 @@
 package sample;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Slider;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 
 
-public class Controller implements Initializable
-{
+public class Controller implements Initializable {
 
     @FXML
     private ListView<String> ListViewAllSongs;
@@ -43,15 +36,15 @@ public class Controller implements Initializable
     @FXML
     private ListView<String> ListViewPlayList;
 
-    @FXML
-    private Slider ProgressBar;
-    @FXML
-    private Slider VolumeSlider;
-
+@FXML
+private MediaView mediaView;
 
 
     private String path;
     private MediaPlayer mediaPlayer;
+    private Media media;
+
+
 
 
     public void HandleDeletePlaylist(ActionEvent actionEvent) {
@@ -71,8 +64,6 @@ public class Controller implements Initializable
 
     public void HandlePlay(ActionEvent event) {
         mediaPlayer.play();
-        HandleProgressBar();
-        HandleVolumeSlider();
 
     }
 
@@ -128,117 +119,30 @@ public class Controller implements Initializable
 
     }
 
-    /**
-     * Makes the progress Bar functional and scalable with interface
-     * If the user presses somewhere on the progress bar, the song will jump to that time
-     * As well as if the user dragged the progress bar, the song will move in accordance
-     */
-
-    public void HandleProgressBar(){
-
-        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-            @Override
-            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
-                ProgressBar.setValue(newValue.toSeconds());
-                //Making the progress bar scalable with interface
-                Duration total = mediaPlayer.getTotalDuration();
-                ProgressBar.setMax(total.toSeconds());
-
-            }
-        });
-
-        //If the user clicks somewhere on the progress Bar the song should jump to that time
-        ProgressBar.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                //Gets the time where the user clicks and sets it
-                mediaPlayer.seek(Duration.seconds(ProgressBar.getValue()));
-            }
-        });
-
-        //Used if the user dragged the progress bar in order to set the time
-        ProgressBar.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                //Gets the time where the user clicks and sets it
-                mediaPlayer.seek(Duration.seconds(ProgressBar.getValue()));
-            }
-        });
-    }
-
-    /**
-    * Makes the volume slider functional
-    * if the volume slider is dragged or clicked the volume will change accordingly
-    */
-
-    public void HandleVolumeSlider(){
-        VolumeSlider.setValue(mediaPlayer.getVolume() * 100);
-        VolumeSlider.valueProperty().addListener(new InvalidationListener() {
-            @Override
-            public void invalidated(Observable observable) {
-                mediaPlayer.setVolume(VolumeSlider.getValue()/100);
-            }
-        });
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         String SongNameData;
-        String PlayListsData;
-        String PlaylistContents;
-
-        //Select Tbl_PlaylistContents from the Database
-        DB.selectSQL("Select fld_SongName from tbl_PlaylistContents");
-
-        //Get the data
-
-        do {
-            PlaylistContents = DB.getDisplayData();
-            if (PlaylistContents.equals(DB.NOMOREDATA)) {
-                break;
-            } else {
-                //Created the List for the ListView
-                ObservableList<String> list = FXCollections.<String>observableArrayList(PlaylistContents);
-
-                //Created the ListView
-                ListView<String> data3 = new ListView<>(list);
-
-
-                //Display the ListView
-                ListViewPlayList.setItems(list);
-
-                System.out.print(PlaylistContents);
-            }
-        } while (true);
-
-
-
+        String PlayListNameData;
+        String PlayListData;
 
 
         //Select Tbl_Songs from the Database
-        DB.selectSQL("Select fld_SongName, fld_Album, fld_Artist, fld_Year, fld_Length from tbl_Songs");
+        DB.selectSQL("Select fld_SongName from tbl_Songs");
+
 
         //Get the data
-
+        ArrayList<String> SongNameList= new ArrayList<>();
         do {
             SongNameData = DB.getDisplayData();
             if (SongNameData.equals(DB.NOMOREDATA)) {
                 break;
-            } else {
-                //Created the List for the ListView
-                ObservableList<String> list = FXCollections.<String>observableArrayList(SongNameData);
-
-                //Created the ListView
-                ListView<String> data = new ListView<>(list);
-
-
-                //Display the ListView
-                ListViewAllSongs.setItems(list);
-
-
-                System.out.print(SongNameData);
+            } else if (SongNameList.add(SongNameData)) {
+                ListViewAllSongs.setItems((FXCollections.observableArrayList(SongNameList)));
             }
         } while (true);
+
+
+
 
 
 
@@ -247,28 +151,44 @@ public class Controller implements Initializable
         DB.selectSQL("Select fld_Name from tbl_Playlists");
 
         //Get the data
-
+        ArrayList<String> PlayListNamesList= new ArrayList<>();
         do {
-            PlayListsData = DB.getDisplayData();
-            if (PlayListsData.equals(DB.NOMOREDATA)) {
+            PlayListNameData = DB.getDisplayData();
+            if (PlayListNameData.equals(DB.NOMOREDATA)) {
                 break;
-            } else {
-
-                //Created the List for the ListView
-                ObservableList<String> list = FXCollections.<String>observableArrayList(PlayListsData);
-
-                //Created the ListView
-                ListView<String> data3 = new ListView<>(list);
-
-
-                //Display the ListView
-                ListViewPlayListNames.setItems(list);
-
-
-                System.out.print(PlayListsData);
+            } else if (PlayListNamesList.add(PlayListNameData)) {
+                ListViewPlayListNames.setItems((FXCollections.observableArrayList(PlayListNamesList)));
             }
         } while (true);
 
+
+
+
+
+
+        //Select Tbl_PlaylistContents from the Database
+        DB.selectSQL("Select fld_SongPosition, fld_SongName from tbl_PlaylistContents");
+
+        //Get the data
+        ArrayList<String> PlayListContentsList= new ArrayList<>();
+
+        do {
+            PlayListData = DB.getDisplayData();
+            if (PlayListData.equals(DB.NOMOREDATA)) {
+                break;
+            } else if (PlayListContentsList.add(PlayListData)) {
+                ListViewPlayList.setItems((FXCollections.observableArrayList(PlayListContentsList)));
+            }
+        } while (true);
+
+    }
+
+    public void PlayMusic(String fileName) {
+        String path = new File("src/sample/media/" + fileName).getAbsolutePath();
+        media = new Media(new File(path).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaView.setMediaPlayer(mediaPlayer);
+        mediaPlayer.play();
     }
 }
 
